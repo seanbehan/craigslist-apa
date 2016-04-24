@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>App</title>
+    <script src="https://cdn.jsdelivr.net/riot/2.3/riot+compiler.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reqwest/2.0.5/reqwest.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/static/style.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body>
+    <app>
+    </app>
+
+    <script type="riot/tag">
+      <app>
+        <apt each={apt,i in apts}></apt>
+      </app>
+
+      <apt>
+        <p>
+          <a href="{base_url}{apt.p.a["@href"]}" target="_blank">
+            View {apt.p.span.span[1].a.span["#text"]}.
+          </a>
+          {apt.p.span.span[2].span[0]['#text']}
+        </p>
+      </apt>
+
+      reqwest('/apa.json', function(resp){
+        window.base_url = resp.base_url
+        window.apts = resp.apts
+        riot.update()
+      })
+    </script>
+
+    <script>
+      riot.mount('*')
+    </script>
+  </body>
+</html>
